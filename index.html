@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#090c18" />
+  <title>Shattered Realms — Open World RPG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="game-shell">
+    <canvas id="world" aria-label="Shattered Realms 3D world"></canvas>
+    <div class="vignette"></div>
+    <header class="topbar">
+      <div class="brand"><div class="brand-mark">✦</div><div><div class="brand-name">SHATTERED <span>REALMS</span></div><div class="brand-kicker">A WORLD BETWEEN WORLDS</div></div></div>
+      <div class="realm-chip"><span class="realm-dot"></span><span id="realm-name">NEON CITY</span><span class="realm-divider">/</span><span id="weather-name">NIGHTFALL</span></div>
+      <button class="icon-button map-toggle" id="map-toggle" aria-label="Open world map">⌖</button>
+    </header>
+    <section class="hud-left">
+      <div class="player-card"><div class="avatar">影</div><div class="player-info"><div class="player-name">WANDERER <span class="level">01</span></div><div class="player-sub" id="awakening-label">UNAWAKENED</div></div><button id="menu-toggle" class="dots">•••</button></div>
+      <div class="vital"><div class="vital-head"><span>VITALITY</span><span id="hp-text">100 / 100</span></div><div class="bar"><i id="hp-bar"></i></div></div>
+      <div class="vital energy-vital"><div class="vital-head"><span>SPIRIT</span><span id="energy-text">60 / 60</span></div><div class="bar"><i id="energy-bar"></i></div></div>
+      <div class="awakening-card"><div class="awaken-icon">✧</div><div><div class="tiny-label">AWAKENING PATH</div><div class="awaken-name" id="path-name">UNWRITTEN</div><div class="path-progress"><i id="path-progress"></i></div></div><div class="path-percent" id="path-percent">0%</div></div>
+    </section>
+    <section class="objective-card" id="objective-card">
+      <div class="objective-top"><span class="quest-icon">◇</span><span class="tiny-label">FIELD INVESTIGATION</span><span class="objective-pin">◉</span></div>
+      <div class="objective-title" id="objective-title">THE VANISHING LINE</div>
+      <div class="objective-copy" id="objective-copy">A ghost train was seen crossing the city. Find the signal fragments before it reaches the station.</div>
+      <div class="objective-step"><span class="step-dot"></span><span id="objective-step">Search the neon district for a signal fragment</span></div>
+      <div class="objective-footer"><span id="clue-count">CLUES 0 / 3</span><span class="distance" id="objective-distance">N 42m</span></div>
+    </section>
+    <section class="event-banner" id="event-banner"><div class="event-emblem">!</div><div class="event-copy"><div class="event-eyebrow">WORLD EVENT · NEARBY</div><div class="event-title">THE VOID HAS OPENED</div><div class="event-sub" id="event-sub">Something ancient stirs beyond the city...</div></div><button id="event-action">ANSWER THE CALL <span>↗</span></button></section>
+    <div class="world-label" id="world-label"><span class="label-line"></span><span id="landmark-name">THE CROSSROADS</span><span class="label-line"></span></div>
+    <div class="toast" id="toast"><span class="toast-glyph">✦</span><span id="toast-text">A new path is waiting.</span></div>
+    <div class="center-prompt" id="center-prompt"></div>
+    <div class="controls-hint"><span class="keycap">WASD</span> MOVE <span class="hint-sep">·</span><span class="keycap">SPACE</span> DODGE <span class="hint-sep">·</span><span class="keycap">E</span> INTERACT</div>
+    <div class="bottom-ui">
+      <div class="bottom-left"><div class="mini-map"><canvas id="minimap" width="156" height="156"></canvas><div class="map-compass">N</div><div class="map-caption">REALM MAP <span>↗</span></div></div><div class="world-coords"><span class="coord-icon">⌖</span><div><div id="coord-region">NEON CITY</div><small id="coord-value">X 004 · Z 012</small></div></div></div>
+      <div class="combat-hud"><div class="combo-readout"><span id="combo-count">00</span><small>COMBO</small></div><div class="combat-buttons">
+        <button class="combat-btn attack-btn" id="attack-btn"><span class="btn-glyph">⚔</span><b>STRIKE</b><small>1</small></button>
+        <button class="combat-btn skill-btn" id="skill-btn"><span class="skill-charge" id="skill-charge"></span><span class="btn-glyph">✧</span><b>RIFT</b><small>Q</small></button>
+        <button class="combat-btn dodge-btn" id="dodge-btn"><span class="btn-glyph">↗</span><b>DODGE</b><small>SPACE</small></button>
+        <button class="combat-btn ult-btn" id="ult-btn"><span class="btn-glyph">◈</span><b>AWAKEN</b><small>F</small></button>
+      </div></div>
+    </div>
+    <div class="touch-stick" id="touch-stick"><div class="stick-ring"><div class="stick-knob" id="stick-knob"></div></div></div>
+    <div class="mobile-actions"><button id="mobile-interact" class="mobile-interact">E <small>INTERACT</small></button></div>
+    <div class="overlay" id="map-overlay"><div class="panel map-panel"><button class="close-panel" data-close>×</button><div class="panel-kicker">THE COLLISION ZONE</div><h2>Realm Atlas</h2><p>Five worlds, one unstable frontier. Follow the shards — or make your own way.</p><canvas id="big-map" width="640" height="420"></canvas><div class="atlas-legend"><span>● YOUR POSITION</span><span>◇ SECRET</span><span>✦ EVENT</span></div><div class="realm-list"><span>01 NEON CITY</span><span>02 CURSED FOREST</span><span>03 FALLEN SHRINE</span><span>04 INFERNO</span><span>05 FROZEN KINGDOM</span></div></div></div>
+    <div class="overlay" id="awakening-overlay"><div class="panel awakening-panel"><button class="close-panel" data-close>×</button><div class="panel-kicker">YOUR ACTIONS SHAPE YOU</div><h2>The awakening</h2><p>Power isn't given. It remembers what you chose.</p><div class="awakening-options"><div class="awaken-option"><span>⚔</span><b>BERSERKER</b><small>Defeat the void titan</small><i id="boss-trait">0 / 1 boss encounters</i></div><div class="awaken-option"><span>◉</span><b>VOID WALKER</b><small>Find what others miss</small><i id="explore-trait">0 / 3 discoveries</i></div><div class="awaken-option"><span>❖</span><b>GUARDIAN</b><small>Stand between danger and others</small><i>Protect the lost traveler</i></div></div><button class="primary-action" id="close-awakening">RETURN TO THE FRONTIER <span>→</span></button></div></div>
+    <div class="overlay" id="choice-overlay"><div class="panel choice-panel"><div class="panel-kicker">A STRANGER AT THE CROSSROADS</div><h2>One more passenger</h2><p>The station keeper clutches a cracked signal charm. The train is already moving.</p><button class="choice-button" data-choice="save"><span>01</span><b>Give up your shard to guide them home</b><small>Some paths are stronger together.</small></button><button class="choice-button" data-choice="keep"><span>02</span><b>Keep the shard. Follow the train alone.</b><small>Power has a way of finding its own.</small></button></div></div>
+    <div class="intro" id="intro"><div class="intro-content"><div class="intro-sigil">✦</div><div class="intro-kicker">A FRONTIER WITHOUT BORDERS</div><h1>THE WORLDS<br><em>HAVE BROKEN.</em></h1><p>Five realms collided. The old rules disappeared.<br>What you become is up to you.</p><button id="begin-btn">ENTER THE SHATTER <span>→</span></button><div class="intro-foot">WASD / JOYSTICK TO EXPLORE <span>·</span> FIND YOUR OWN PATH</div></div></div>
+  </main>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
